@@ -1,13 +1,104 @@
-# Setup
+# Setup & Operational Guide — Premium Animated GitHub Profile
 
-1. Copy these files to the public `krishanurastogi06-byte/krishanurastogi06-byte` profile repository.
-2. Replace the placeholder colours and typography in `profile.json` with the actual website's design tokens. The website URL was not supplied and its styling could not be verified. The portfolio tile currently links to GitHub deliberately rather than inventing a URL.
-3. Put a licensed local TTF/OTF font in `assets/font.ttf` (or change `font_file`). Optional portrait goes in `assets/portrait.png`. The renderer embeds both assets into the SVG itself. Font subsetting requires `pyftsubset` from `fonttools`.
-4. Populate `featured` in `profile.json` with real repository objects: `name`, `description`, `language`, `url`. No repositories are invented.
-5. Add an Actions secret `PROFILE_TOKEN` with read access to your profile contribution data (classic token: `read:user`; private contributions require appropriate access). GitHub's default `GITHUB_TOKEN` may not have access to another repository's user contributions; use the explicit secret.
-6. Enable Actions write permission for the profile repo. The workflow fetches data, renders cards, and commits generated files every day. Scheduled workflows run on the default branch and can be delayed.
-7. Local preview: `pip install fonttools brotli`; `STATIC=1 python render.py` (Windows PowerShell: `$env:STATIC='1'; python render.py`). Preview `cards/*.svg` in a browser or screenshot. Run `python render.py` without STATIC before publishing to restore animations.
+This repository powers an automated, high-precision SVG portfolio engine for Krishanu Rastogi's GitHub Profile README.
 
-**Rendering limitations:** GitHub sanitizes README HTML and external image contexts vary. Inline CSS animations/SMIL in SVG files may be suppressed in some GitHub rendering surfaces; verify on the live profile. Reduced-motion CSS disables CSS animations. No JS, external stylesheets, remote fonts or remote SVG assets are required. Image links belong in README `<a>` wrappers. The three tiles use `width="32.5%"` each.
+---
 
-**Analytics definitions:** 365-day UTC lookback; current streak is consecutive active days ending today or yesterday; active days are days with nonzero contributions; busiest day is the highest daily contribution count. GitHub contribution counts are GitHub's calendar values, not commit-only counts. Public profile data may omit private activity depending on token/account settings.
+## 1. Quick Start / Local Commands
+
+### Prerequisites
+- Python 3.10+
+- Dependencies: `fonttools`, `brotli`
+
+```powershell
+# Install required Python packages
+pip install fonttools brotli
+
+# 1. Fetch real GitHub contributions & repository metadata
+# (Uses public scrape fallback automatically if GH_TOKEN is not provided)
+python fetch.py
+
+# 2. Render all animated SVG cards & README.md
+python render.py
+
+# 3. Validate XML syntax of all generated cards
+python validate_svgs.py
+
+# 4. Render in static mode (no animations, for static audits or fallback verification)
+$env:STATIC="1"; python render.py; Remove-Item env:\STATIC
+```
+
+---
+
+## 2. Architecture & File Structure
+
+```text
+github-profile-svg/
+├── .github/
+│   └── workflows/
+│       └── cards.yml          # Automated daily GitHub Action workflow
+├── assets/
+│   ├── font.ttf               # Space Grotesk font (subsetted into WOFF at render time)
+│   └── portrait.png           # Profile photo embedded into hero.svg
+├── cards/                     # Generated standalone SVG cards
+│   ├── hero.svg               # Editorial hero with avatar, orbital rings & status beacon
+│   ├── link-1.svg             # 01 / GITHUB navigation bento tile
+│   ├── link-2.svg             # 02 / PORTFOLIO navigation bento tile
+│   ├── link-3.svg             # 03 / PROJECTS navigation bento tile
+│   ├── activity.svg           # 4 KPI metrics + 12-month contribution cadence bar chart
+│   ├── repo-1.svg             # Featured Project 01 (TrustTrack)
+│   ├── repo-2.svg             # Featured Project 02 (Aroven-Tech)
+│   ├── graph.svg              # 365-day branded contribution calendar (53w x 7d)
+│   └── closing.svg            # Signature quote & interactive CTA buttons
+├── data/
+│   └── contributions.json     # Normalized real telemetry & activity data
+├── fetch.py                   # Dual-mode data fetching pipeline (GraphQL & public scrape)
+├── profile.json               # Brand configuration, color tokens & project showcase
+├── README.md                  # Main GitHub profile layout
+├── render.py                  # High-precision SVG rendering & animation engine
+├── validate_svgs.py           # Strict XML syntax & viewBox validator
+└── SETUP.md                   # Documentation & operations guide
+```
+
+---
+
+## 3. Brand Identity & Design System
+
+The visual identity is modeled directly after Krishanu Rastogi's live portfolio:
+
+- **Background Void**: `#050508`
+- **Card Surface**: `#0C0C14` / Elevated `#12121E`
+- **Subtle Borders**: `#1E1E2C` (with `#625FFF40` highlight rings)
+- **Primary Accent**: `#625FFF` (Electric Purple-Indigo)
+- **Secondary Accents**: `#7D87FF` (Periwinkle), `#AC4BFF` (Luminous Violet), `#54A2FF` (Cyan Blue)
+- **Live Status Beacon**: `#00D294` (Pulsating Emerald Green)
+- **Heatmap 5-Step Scale**: `#12121C` → `#231F4D` → `#3C328E` → `#5A4DF3` → `#7D72FF`
+- **Typography**: Space Grotesk (subsetted into ~11 KB WOFF, base64-embedded directly into SVGs)
+
+---
+
+## 4. GitHub Actions Deployment
+
+The automated workflow (`.github/workflows/cards.yml`) runs:
+1. Daily on a schedule at `02:17 UTC`.
+2. Manually via `workflow_dispatch`.
+
+### Secrets Setup
+To enable authenticated GraphQL queries (including private contributions, if desired):
+1. Create a GitHub Personal Access Token (classic) with `read:user` permission.
+2. Go to your repository **Settings → Secrets and variables → Actions**.
+3. Create a secret named `PROFILE_TOKEN` and paste the token.
+*(Note: If `PROFILE_TOKEN` is not set, `fetch.py` automatically falls back to fetching your public contribution calendar).*
+
+### Permissions
+Ensure Actions has read and write permissions:
+1. Go to repository **Settings → Actions → General → Workflow permissions**.
+2. Select **Read and write permissions**.
+3. Check **Allow GitHub Actions to create and approve pull requests**.
+
+---
+
+## 5. Accessibility & Motion Compliance
+
+- **Reduced Motion**: All cards include `@media (prefers-reduced-motion: reduce)` rules that automatically disable animations, transforms, and delays, rendering the 100% complete final state.
+- **Static Mode**: Setting environment variable `STATIC=1` disables all keyframe definitions and outputs clean, static SVGs.

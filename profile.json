@@ -1,41 +1,85 @@
 {
   "name": "Krishanu Rastogi",
   "tagline": "Designing thoughtful interfaces. Building useful software.",
-  "role": "UI/UX Developer · React · Next.js · Product Design",
+  "role": "UI/UX & Frontend Developer",
+  "location": "India · Remote",
+  "status": "Available for opportunities & freelance",
   "font_file": "assets/font.ttf",
   "portrait": "assets/portrait.png",
   "colors": {
-    "background": "#000000",
-    "surface": "#0D0D0F",
+    "background": "#050508",
+    "surface": "#0C0C14",
+    "surface_elevated": "#12121E",
+    "border": "#1E1E2C",
+    "border_highlight": "#625FFF40",
     "text": "#FFFFFF",
-    "muted": "#8A8A93",
-    "accent": "#6258FF",
-    "border": "#242428",
-    "heat1": "#24204D",
-    "heat2": "#39328C",
-    "heat3": "#4E45D1"
+    "text_muted": "#8A8A9B",
+    "accent": "#625FFF",
+    "accent_light": "#7D87FF",
+    "accent_glow": "#AC4BFF",
+    "accent_blue": "#54A2FF",
+    "status_green": "#00D294",
+    "heat0": "#12121C",
+    "heat1": "#231F4D",
+    "heat2": "#3C328E",
+    "heat3": "#5A4DF3",
+    "heat4": "#7D72FF"
   },
+  "pillars": [
+    { "title": "UI/UX DESIGN", "desc": "Design systems & user-first interfaces" },
+    { "title": "FRONTEND DEV", "desc": "Clean, performant React & Next.js" },
+    { "title": "MOTION DESIGN", "desc": "Buttery micro-interactions & transitions" }
+  ],
   "links": [
     {
+      "num": "01",
       "label": "GITHUB",
-      "subtitle": "Explore my code",
+      "subtitle": "Open source & code repositories",
       "url": "https://github.com/krishanurastogi06-byte"
     },
     {
+      "num": "02",
       "label": "PORTFOLIO",
-      "subtitle": "Website URL needed",
-      "url": "https://github.com/krishanurastogi06-byte"
-    },
-    {
-      "label": "PROJECTS",
-      "subtitle": "What I'm building",
-      "url": "https://github.com/krishanurastogi06-byte?tab=repositories"
-    },
-    {
-      "label": "PORTFOLIO",
-      "subtitle": "Explore my work",
+      "subtitle": "Interactive design case studies",
       "url": "https://krishanu-rastogi-portfolio.vercel.app/"
+    },
+    {
+      "num": "03",
+      "label": "PROJECTS",
+      "subtitle": "Full-stack products & web apps",
+      "url": "https://github.com/krishanurastogi06-byte?tab=repositories"
     }
   ],
-  "featured": []
+  "featured": [
+    {
+      "id": "01",
+      "name": "TrustTrack",
+      "tagline": "Decentralized Donation Transparency Platform",
+      "description": "Milestone-based donation platform eliminating the trust gap through smart escrow on Polygon.",
+      "language": "JavaScript",
+      "tags": ["Web3", "Solidity", "React 19", "Polygon"],
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/krishanurastogi06-byte/TrustTrack",
+      "demo": "https://trust-track-two.vercel.app"
+    },
+    {
+      "id": "02",
+      "name": "Aroven-Tech",
+      "tagline": "Modern Digital Platform & Store",
+      "description": "Production-ready digital ecosystem featuring AI-powered solutions, curated store, and admin analytics dashboard.",
+      "language": "JavaScript",
+      "tags": ["Next.js 15", "Tailwind CSS", "OpenAI", "MongoDB"],
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/krishanurastogi06-byte/Aroven-Tech",
+      "demo": "https://aroven-tech2026.vercel.app"
+    }
+  ],
+  "socials": {
+    "portfolio": "https://krishanu-rastogi-portfolio.vercel.app/",
+    "github": "https://github.com/krishanurastogi06-byte",
+    "linkedin": "https://www.linkedin.com/in/krishanu-rastogi-",
+    "email": "krishrastogi06@gmail.com"
+  }
 }

@@ -1,30 +1,61 @@
-name: Refresh profile cards
+name: Refresh Profile Cards & Contributions
+
 on:
   schedule:
+    # Run daily at 02:17 UTC
     - cron: '17 2 * * *'
   workflow_dispatch:
+
 permissions:
   contents: write
+
 jobs:
   refresh:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Install font subsetting
-        run: pip install fonttools brotli
-      - name: Fetch daily contributions and repository metadata
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install fonttools brotli
+
+      - name: Fetch daily contributions and repository telemetry
         env:
-          GH_TOKEN: ${{ secrets.PROFILE_TOKEN }}
+          GH_TOKEN: ${{ secrets.PROFILE_TOKEN || secrets.GITHUB_TOKEN }}
           GH_USER: krishanurastogi06-byte
-        run: python fetch.py
-      - name: Render animated cards
-        run: python render.py
-      - name: Commit refreshed cards and data
+        run: |
+          python fetch.py
+
+      - name: Validate contribution telemetry data
+        run: |
+          python -c "import json, sys; d = json.load(open('data/contributions.json', encoding='utf-8')); assert 'days' in d and len(d['days']) > 0, 'Empty days in data/contributions.json'; print(f'Validated telemetry: {len(d[\"days\"])} days, {d.get(\"total_contributions\", 0)} total contributions')"
+
+      - name: Render animated SVG cards & README
+        run: |
+          python render.py
+
+      - name: Validate generated SVG cards
+        run: |
+          python validate_svgs.py
+
+      - name: Commit & push refreshed cards and README
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add cards/ data/contributions.json README.md
-          git diff --cached --quiet || (git commit -m 'chore: refresh profile cards' && git push)
+          if git diff --staged --quiet; then
+            echo "No changes detected. Skipping commit."
+          else
+            git commit -m "chore(telemetry): auto-refresh contribution cards and activity [skip ci]"
+            git push
+          fi
