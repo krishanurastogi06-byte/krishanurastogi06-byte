@@ -268,6 +268,24 @@ def main():
                 pass
         raise SystemExit("Error: Unable to fetch contribution data from GitHub.")
 
+    # Check if local contributions.json already has private contribution data with higher count
+    if CONTRIB_FILE.is_file() and not TOKEN:
+        try:
+            cached = json.loads(CONTRIB_FILE.read_text(encoding='utf-8'))
+            cached_total = cached.get('total_contributions', 0)
+            fetched_total = sum(d['count'] for d in days)
+            if cached_total > fetched_total:
+                print(f"Info: Public unauthenticated scrape returned {fetched_total} contributions, but cached dataset contains {cached_total} contributions (including private contributions). Retaining full dataset.")
+                # Still update repository metadata if available
+                repos = fetch_public_repositories(USERNAME)
+                if repos:
+                    cached['repositories'] = repos
+                    CONTRIB_FILE.write_text(json.dumps(cached, indent=2) + '\n', encoding='utf-8')
+                    print(f"Updated repository metadata for {len(repos)} repositories.")
+                return
+        except Exception as exc:
+            print(f"Notice: Could not compare with cached data: {exc}")
+
     analytics = calculate_analytics(days)
     repos = fetch_public_repositories(USERNAME)
 

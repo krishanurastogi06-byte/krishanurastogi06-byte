@@ -276,13 +276,13 @@ def render_hero():
   <!-- Header Metadata Row -->
   <g class="fade-up" style="animation-delay: 0.05s;">
     <!-- Active Status Beacon -->
-    <rect x="42" y="32" width="220" height="26" rx="13" fill="{PANEL_ELEVATED}" stroke="{BORDER}" stroke-width="1"/>
+    <rect x="42" y="32" width="295" height="26" rx="13" fill="{PANEL_ELEVATED}" stroke="{BORDER}" stroke-width="1"/>
     <circle cx="56" cy="45" r="4" fill="{GREEN}"/>
     <circle cx="56" cy="45" r="7" fill="none" stroke="{GREEN}" stroke-width="1.5" class="pulse-dot" opacity="0.6"/>
     <text x="68" y="49" fill="{FG}" font-size="10" font-weight="600" class="mono" letter-spacing="0.8">{e(status.upper())}</text>
 
     <!-- Location & Discipline Badge -->
-    <text x="690" y="49" fill="{MUTED}" font-size="11" font-weight="500" class="mono" letter-spacing="1">{e(location.upper())} · DESIGN &amp; CODE</text>
+    <text x="730" y="49" fill="{MUTED}" font-size="10" font-weight="500" class="mono" letter-spacing="1">INDIA · UI/UX &amp; DEV</text>
   </g>
 
   <!-- Hero Identity Block -->
@@ -309,7 +309,7 @@ def render_hero():
       <rect width="180" height="34" rx="8" fill="{PANEL}" stroke="{BORDER}" stroke-width="1"/>
       <circle cx="16" cy="17" r="3" fill="{ACC}"/>
       <text x="28" y="21" fill="{FG}" font-size="11" font-weight="700">UI/UX DESIGN</text>
-      <text x="108" y="21" fill="{MUTED}" font-size="10" font-weight="400">· Systems</text>
+      <text x="116" y="21" fill="{MUTED}" font-size="10" font-weight="400">· Systems</text>
     </g>
 
     <!-- Pill 2: Frontend Dev -->
@@ -317,7 +317,7 @@ def render_hero():
       <rect width="180" height="34" rx="8" fill="{PANEL}" stroke="{BORDER}" stroke-width="1"/>
       <circle cx="16" cy="17" r="3" fill="{ACC_CYAN}"/>
       <text x="28" y="21" fill="{FG}" font-size="11" font-weight="700">FRONTEND DEV</text>
-      <text x="116" y="21" fill="{MUTED}" font-size="10" font-weight="400">· Next.js</text>
+      <text x="124" y="21" fill="{MUTED}" font-size="10" font-weight="400">· Next.js</text>
     </g>
 
     <!-- Pill 3: Motion Design -->
@@ -325,7 +325,7 @@ def render_hero():
       <rect width="180" height="34" rx="8" fill="{PANEL}" stroke="{BORDER}" stroke-width="1"/>
       <circle cx="16" cy="17" r="3" fill="{ACC_GLOW}"/>
       <text x="28" y="21" fill="{FG}" font-size="11" font-weight="700">MOTION DESIGN</text>
-      <text x="122" y="21" fill="{MUTED}" font-size="10" font-weight="400">· GSAP</text>
+      <text x="130" y="21" fill="{MUTED}" font-size="10" font-weight="400">· GSAP</text>
     </g>
   </g>
 
@@ -420,7 +420,7 @@ def render_activity():
 
     kpi_cards = ""
     col_w = 216
-    start_x = 42
+    start_x = 38
     gap = 20
     for idx, kpi in enumerate(kpis):
         x = start_x + idx * (col_w + gap)
@@ -639,7 +639,7 @@ def render_heatmap():
     weekday_markup = ""
     for dow, wlabel in [(1, 'Mon'), (3, 'Wed'), (5, 'Fri')]:
         wy = grid_y0 + dow * (cell_size + cell_gap) + 9
-        weekday_markup += f'<text x="{grid_x0 - 24}" y="{wy}" fill="{MUTED}" font-size="9" font-weight="500" class="mono">{wlabel}</text>'
+        weekday_markup += f'<text x="{grid_x0 - 20}" y="{wy}" fill="{MUTED}" font-size="9" font-weight="500" class="mono">{wlabel}</text>'
 
     # Render 53 weeks x 7 days
     cells_markup = ""
@@ -651,11 +651,11 @@ def render_heatmap():
         # Intensity scale: 0 to 4
         if count == 0:
             level = 0
-        elif count <= 2:
+        elif count <= 3:
             level = 1
-        elif count <= 4:
+        elif count <= 6:
             level = 2
-        elif count <= 7:
+        elif count <= 10:
             level = 3
         else:
             level = 4
