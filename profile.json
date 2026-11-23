@@ -1,0 +1,41 @@
+{
+  "name": "Krishanu Rastogi",
+  "tagline": "Designing thoughtful interfaces. Building useful software.",
+  "role": "UI/UX Developer · React · Next.js · Product Design",
+  "font_file": "assets/font.ttf",
+  "portrait": "assets/portrait.png",
+  "colors": {
+    "background": "#000000",
+    "surface": "#0D0D0F",
+    "text": "#FFFFFF",
+    "muted": "#8A8A93",
+    "accent": "#6258FF",
+    "border": "#242428",
+    "heat1": "#24204D",
+    "heat2": "#39328C",
+    "heat3": "#4E45D1"
+  },
+  "links": [
+    {
+      "label": "GITHUB",
+      "subtitle": "Explore my code",
+      "url": "https://github.com/krishanurastogi06-byte"
+    },
+    {
+      "label": "PORTFOLIO",
+      "subtitle": "Website URL needed",
+      "url": "https://github.com/krishanurastogi06-byte"
+    },
+    {
+      "label": "PROJECTS",
+      "subtitle": "What I'm building",
+      "url": "https://github.com/krishanurastogi06-byte?tab=repositories"
+    },
+    {
+      "label": "PORTFOLIO",
+      "subtitle": "Explore my work",
+      "url": "https://krishanu-rastogi-portfolio.vercel.app/"
+    }
+  ],
+  "featured": []
+}
